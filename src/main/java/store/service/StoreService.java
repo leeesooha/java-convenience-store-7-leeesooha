@@ -38,17 +38,27 @@ public class StoreService {
         int quantity = Integer.parseInt(productInfo.get(2));
         String promotionName = productInfo.get(3);
 
-        Promotion promotion = promotionCatalog.findPromotion(promotionName);
-        //오늘날짜가 프로모션기간이내가 아니라면 프로모션 빈문자열 할당.
-        if (promotion == null) {
-            promotion = new Promotion("");
-        }
+        Promotion promotion = findOrCreatePromotion(promotionCatalog, promotionName);
+        Product product = findOrCreateProduct(inventory, productName, price);
+        return new ProductBox(product, promotion, quantity);
+    }
 
+    private Product findOrCreateProduct(Inventory inventory, String productName, int price) {
         Product product = inventory.findProductByProductBox(productName);
+
         if (product == null) {
             product = new Product(productName, price);
         }
-        return new ProductBox(product, promotion, quantity);
+        return product;
+    }
+
+    Promotion findOrCreatePromotion(PromotionCatalog promotionCatalog, String promotionName) {
+        Promotion promotion = promotionCatalog.findPromotion(promotionName);
+
+        if (promotion == null) {
+            promotion = new Promotion("");
+        }
+        return promotion;
     }
 
     public PromotionCatalog createPromotion() {
