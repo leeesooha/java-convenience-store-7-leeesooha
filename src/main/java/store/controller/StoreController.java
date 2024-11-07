@@ -1,6 +1,5 @@
 package store.controller;
 
-import java.io.IOException;
 import store.model.Inventory;
 import store.model.PromotionCatalog;
 import store.service.StoreService;
@@ -20,7 +19,7 @@ public class StoreController {
 
     public void run() {
         PromotionCatalog promotionCatalog = storeService.createPromotion();
-        Inventory inventory = storeService.createInventory();
+        Inventory inventory = storeService.createInventory(promotionCatalog);
         outputView.printWelcomeMessage();
 //        while (true) {
 //        }

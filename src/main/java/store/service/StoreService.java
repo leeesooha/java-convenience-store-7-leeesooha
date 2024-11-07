@@ -7,6 +7,7 @@ import store.dataBase.ProductDB;
 import store.dataBase.PromotionDB;
 import store.model.Product;
 import store.model.Inventory;
+import store.model.ProductBox;
 import store.model.Promotion;
 import store.model.PromotionCatalog;
 
@@ -19,24 +20,35 @@ public class StoreService {
         this.productDB = new ProductDB();
     }
 
-    public Inventory createInventory() {
+    public Inventory createInventory(PromotionCatalog promotionCatalog) {
         List<String> products = productDB.findProduct();
         Inventory inventory = new Inventory();
 
         products.stream()
-                .map(this::toProduct)
-                .forEach(inventory::addProduct);
+                .map(productData -> toProductBox(productData, promotionCatalog, inventory))
+                .forEach(inventory::addProductBox);
 
         return inventory;
     }
 
-    private Product toProduct(String productData) {
+    private ProductBox toProductBox(String productData, PromotionCatalog promotionCatalog, Inventory inventory) {
         List<String> productInfo = Arrays.asList(productData.split(","));
-        String name = productInfo.get(0);
+        String productName = productInfo.get(0);
         int price = Integer.parseInt(productInfo.get(1));
         int quantity = Integer.parseInt(productInfo.get(2));
-        String promotion = productInfo.get(3);
-        return new Product(name, price, quantity, promotion);
+        String promotionName = productInfo.get(3);
+
+        Promotion promotion = promotionCatalog.findPromotion(promotionName);
+        //오늘날짜가 프로모션기간이내가 아니라면 프로모션 빈문자열 할당.
+        if (promotion == null) {
+            promotion = new Promotion("");
+        }
+
+        Product product = inventory.findProductByProductBox(productName);
+        if (product == null) {
+            product = new Product(productName, price);
+        }
+        return new ProductBox(product, promotion, quantity);
     }
 
     public PromotionCatalog createPromotion() {

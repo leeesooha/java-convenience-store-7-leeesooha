@@ -14,4 +14,12 @@ public class PromotionCatalog {
         this.promotions.add(promotion);
     }
 
+    public Promotion findPromotion(String promotionName) {
+        for (Promotion promotion : promotions) {
+            if (promotion.getName().equals(promotionName)) {
+                return promotion;
+            }
+        }
+        return null;
+    }
 }
