@@ -20,9 +20,8 @@ public class StoreController {
     public void run() {
         PromotionCatalog promotionCatalog = storeService.createPromotion();
         Inventory inventory = storeService.createInventory(promotionCatalog);
-        outputView.printWelcomeMessage();
-        outputView.displayInventory(inventory);
 //        while (true) {
+        outputView.displayInventory(inventory);
 //        }
     }
 }

@@ -12,6 +12,7 @@ public class OutputView {
     }
 
     public void displayInventory(Inventory inventory) {
+        this.printWelcomeMessage();
         for (ProductBox productBox : inventory.getProductBoxes()) {
             String productName = productBox.getProduct().getName();
             int price = productBox.getProduct().getPrice();
