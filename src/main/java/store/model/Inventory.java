@@ -1,6 +1,7 @@
 package store.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Inventory {
@@ -21,5 +22,9 @@ public class Inventory {
             }
         }
         return null;
+    }
+
+    public List<ProductBox> getProductBoxes() {
+        return Collections.unmodifiableList(productBoxes);
     }
 }

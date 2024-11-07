@@ -21,6 +21,7 @@ public class StoreController {
         PromotionCatalog promotionCatalog = storeService.createPromotion();
         Inventory inventory = storeService.createInventory(promotionCatalog);
         outputView.printWelcomeMessage();
+        outputView.displayInventory(inventory);
 //        while (true) {
 //        }
     }

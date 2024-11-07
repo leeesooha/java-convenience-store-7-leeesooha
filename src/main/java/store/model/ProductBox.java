@@ -26,4 +26,12 @@ public class ProductBox {
     public Product getProduct() {
         return product;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public Promotion getPromotion() {
+        return promotion;
+    }
 }
