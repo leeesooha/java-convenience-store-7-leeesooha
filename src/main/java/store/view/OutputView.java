@@ -21,6 +21,7 @@ public class OutputView {
 
             displayProductLine(productName, price, quantity, promotionName);
         }
+        System.out.println();
     }
 
     public void displayProductLine(String productName, int price, int quantity, String promotionName) {
