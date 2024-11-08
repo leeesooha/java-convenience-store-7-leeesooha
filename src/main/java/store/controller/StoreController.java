@@ -74,6 +74,7 @@ public class StoreController {
                 //남은 수량 만큼 일반재고 차감
                 ProductBox normalProductBox = stockInventory.findNormalProductBoxByProductName(shoppingItem.getName());
                 normalProductBox.decreaseQuantityBy(notApplyPromotionQuantity);
+                promotionProductBox.decreaseQuantityBy(promotionProductBox.getQuantity());
                 continue;
             }
             //구매안한다면
