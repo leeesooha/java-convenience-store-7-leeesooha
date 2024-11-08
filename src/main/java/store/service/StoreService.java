@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import store.dataBase.ProductDB;
 import store.dataBase.PromotionDB;
+import store.enums.Error;
 import store.model.Product;
 import store.model.ShoppingItem;
 import store.model.StockInventory;
@@ -103,5 +104,13 @@ public class StoreService {
     public ShoppingCart createShoppingCart(List<String> shoppingItemData) {
         List<ShoppingItem> shoppingItems = this.toShoppingItem(shoppingItemData);
         return new ShoppingCart(shoppingItems);
+    }
+
+    public void checkAllStockAvailable(StockInventory stockInventory, ShoppingCart shoppingCart) {
+        for (ShoppingItem shoppingItem : shoppingCart.getShoppingItems()) {
+            if (!stockInventory.isStockAvailable(shoppingItem.getName(), shoppingItem.getQuantity())) {
+                throw new IllegalArgumentException(Error.INSUFFICIENT_STOCK_MESSAGE.getErrorMessage());
+            }
+        }
     }
 }

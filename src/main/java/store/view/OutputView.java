@@ -39,4 +39,8 @@ public class OutputView {
         }
         System.out.printf("- %s %,d원 %,d개%s\n", productName, price, quantity, promotionName);
     }
+
+    public void display(String message) {
+        System.out.println(message);
+    }
 }
