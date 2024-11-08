@@ -121,4 +121,16 @@ public class StoreService {
             }
         }
     }
+
+    public void reduceStockByPurchase(StockInventory stockInventory, ShoppingCart shoppingCart) {
+        for (ShoppingItem shoppingItem : shoppingCart.getShoppingItems()) {
+            ProductBox promotionProductBox = stockInventory.findPromotionProductBoxByProductName(shoppingItem.getName());
+            if (promotionProductBox == null) { //프로모션 아니면
+                //일반재고 차감
+                 ProductBox normalProductBox = stockInventory.findNormalProductBoxByProductName(shoppingItem.getName());
+                 normalProductBox.decreaseQuantityBy(shoppingItem.getQuantity());
+                 continue;
+            }
+        }
+    }
 }

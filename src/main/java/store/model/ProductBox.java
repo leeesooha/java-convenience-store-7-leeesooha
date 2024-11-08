@@ -2,7 +2,7 @@ package store.model;
 
 public class ProductBox {
     private Product product;
-    private final int quantity;
+    private int quantity;
     private Promotion promotion;
 
     public ProductBox(Product product, Promotion promotion, int quantity) {
@@ -33,5 +33,13 @@ public class ProductBox {
 
     public Promotion getPromotion() {
         return promotion;
+    }
+
+    public void decreaseQuantityBy(int count) {
+        if (this.quantity - count <= 0) {
+            this.quantity = 0;
+            return;
+        }
+        this.quantity -= count;
     }
 }

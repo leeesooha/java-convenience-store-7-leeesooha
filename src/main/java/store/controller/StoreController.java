@@ -36,6 +36,8 @@ public class StoreController {
             try {
                 storeService.checkAllExistProductName(stockInventory, shoppingCart);
                 storeService.checkAllStockAvailable(stockInventory, shoppingCart);
+                storeService.reduceStockByPurchase(stockInventory, shoppingCart);
+
             } catch (IllegalArgumentException e){
                 outputView.display(e.getMessage());
                 continue;
