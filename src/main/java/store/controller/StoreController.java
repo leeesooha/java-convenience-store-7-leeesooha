@@ -79,6 +79,7 @@ public class StoreController {
             }
             //구매안한다면
             //장바구니에 구매 수량 변경해줌. 구매 안하는 수량만큼 빼줌.
+            promotionProductBox.decreaseQuantityBy(promotionProductBox.getQuantity());
             shoppingItem.decreaseQuantityBy(notApplyPromotionQuantity);
         }
     }
