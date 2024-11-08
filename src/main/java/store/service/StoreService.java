@@ -125,12 +125,29 @@ public class StoreService {
     public void reduceStockByPurchase(StockInventory stockInventory, ShoppingCart shoppingCart) {
         for (ShoppingItem shoppingItem : shoppingCart.getShoppingItems()) {
             ProductBox promotionProductBox = stockInventory.findPromotionProductBoxByProductName(shoppingItem.getName());
+            //일반재고 일시
             if (promotionProductBox == null) { //프로모션 아니면
                 //일반재고 차감
                  ProductBox normalProductBox = stockInventory.findNormalProductBoxByProductName(shoppingItem.getName());
                  normalProductBox.decreaseQuantityBy(shoppingItem.getQuantity());
                  continue;
             }
+            //프로모션상품 일시
+            //프로모션 재고 충분하면
+            if (shoppingItem.getQuantity() <= promotionProductBox.getQuantity()) {
+                promotionProductBox.decreaseQuantityBy(shoppingItem.getQuantity());
+                continue;
+            }
+            //프로모션 재고가 부족하면
+//            if ("프로모션 재고가 부족하면") {
+//                //그래도 구매하시겠습니까? 띄우고
+//                if ("구매한다면") {
+//                    //남은 수량 만큼 일반재고 차감
+//                    continue;
+//                }
+//                //구매안한다면
+//                //장바구니에 구매 수량 변경해줌. 구매 안하는 수량만큼 빼줌.
+//            }
         }
     }
 }
