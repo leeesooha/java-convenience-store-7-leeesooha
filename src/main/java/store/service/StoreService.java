@@ -1,8 +1,10 @@
 package store.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import store.dataBase.ProductDB;
 import store.dataBase.PromotionDB;
 import store.model.Product;
@@ -10,6 +12,7 @@ import store.model.Inventory;
 import store.model.ProductBox;
 import store.model.Promotion;
 import store.model.PromotionCatalog;
+import store.model.ShoppingCart;
 
 public class StoreService {
     PromotionDB promotionDB;
@@ -81,5 +84,23 @@ public class StoreService {
         LocalDate startDate = LocalDate.parse(promotionField.get(3));
         LocalDate endDate = LocalDate.parse(promotionField.get(4));
         return new Promotion(name, buy, get, startDate, endDate);
+    }
+
+    public List<Product> toProduct(List<String> productData) {
+        List<String> cleanedProductData = productData.stream()
+                .map(product -> product.replaceAll("^\\[|\\]$", ""))
+                .collect(Collectors.toList());
+        List<Product> products = new ArrayList<>();
+
+        for (String oneProduct : cleanedProductData) {
+            String[] productField = oneProduct.split("-");
+            products.add(new Product(productField[0], Integer.parseInt(productField[1])));
+        }
+        return products;
+    }
+
+    public ShoppingCart createShoppingCart(List<String> productData) {
+        List<Product> products = this.toProduct(productData);
+        return new ShoppingCart(products);
     }
 }

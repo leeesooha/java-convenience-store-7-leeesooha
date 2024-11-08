@@ -1,7 +1,9 @@
 package store.controller;
 
+import java.util.List;
 import store.model.Inventory;
 import store.model.PromotionCatalog;
+import store.model.ShoppingCart;
 import store.service.StoreService;
 import store.view.InputView;
 import store.view.OutputView;
@@ -29,6 +31,7 @@ public class StoreController {
     private void purchaseProduct(Inventory inventory) {
         outputView.displayPurchaseMessage();
         List<String> productData = inputView.inputProduct();
+        ShoppingCart shoppingCart = storeService.createShoppingCart(productData);
         //프로모션인지 확인
         //프로모션이 개수 확인
             //모자르면 적용안됨. 그래도 구매?
