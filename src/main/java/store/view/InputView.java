@@ -12,4 +12,12 @@ public class InputView {
 
         return input;
     }
+
+    public boolean inputYesOrNo() {
+        String input = Console.readLine();
+        if (input.equals("Y")) {
+            return true;
+        }
+        return false;
+    }
 }
