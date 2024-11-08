@@ -28,7 +28,7 @@ public class StoreController {
 
     private void purchaseProduct(Inventory inventory) {
         outputView.displayPurchaseMessage();
-        //구매할 상품 입력
+        List<String> productData = inputView.inputProduct();
         //프로모션인지 확인
         //프로모션이 개수 확인
             //모자르면 적용안됨. 그래도 구매?
