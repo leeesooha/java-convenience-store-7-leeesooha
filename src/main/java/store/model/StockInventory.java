@@ -15,7 +15,7 @@ public class StockInventory {
         this.productBoxes.add(productBox);
     }
 
-    public Product findProductByProductBox(String productName) {
+    public Product findProductByProductName(String productName) {
         for (ProductBox productBox : productBoxes) {
             if (productBox.isMatchProduct(productName)) {
                 return productBox.getProduct();
@@ -26,5 +26,15 @@ public class StockInventory {
 
     public List<ProductBox> getProductBoxes() {
         return Collections.unmodifiableList(productBoxes);
+    }
+
+    public ProductBox findPromotionProductBoxByProductName(String productName) {
+        for (ProductBox productBox : productBoxes) {
+            if (!productBox.getPromotion().getName().isEmpty() &&
+                    productBox.getProduct().getName().equals(productName)) {
+                return productBox;
+            }
+        }
+        return null;
     }
 }

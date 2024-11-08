@@ -1,6 +1,8 @@
 package store.controller;
 
 import java.util.List;
+import store.model.ProductBox;
+import store.model.ShoppingItem;
 import store.model.StockInventory;
 import store.model.PromotionCatalog;
 import store.model.ShoppingCart;
@@ -32,11 +34,21 @@ public class StoreController {
         outputView.displayPurchaseMessage();
         List<String> productData = inputView.inputProduct();
         ShoppingCart shoppingCart = storeService.createShoppingCart(productData);
+        //프로모션인지 찾는 반복문
+        for (ShoppingItem shoppingItem : shoppingCart.getShoppingItems()) {
+            ProductBox promotionProductBox = stockInventory.findPromotionProductBoxByProductName(shoppingItem.getName());
+            if (promotionProductBox == null) {
+                continue;
+            }
+
+        }
+        //일반상품 반복문
+
         //프로모션인지 확인
         //프로모션이 개수 확인
-            //모자르면 적용안됨. 그래도 구매?
-                //Y면 멤버십(이 메소드는 끝이다 사실상)
-                //N이면 구매를 아예안해?? 아니면 프로모션만 구매햌?
+        //모자르면 적용안됨. 그래도 구매?
+        //Y면 멤버십(이 메소드는 끝이다 사실상)
+        //N이면 구매를 아예안해?? 아니면 프로모션만 구매햌?
 
     }
 }
