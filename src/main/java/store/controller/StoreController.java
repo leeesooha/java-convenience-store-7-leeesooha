@@ -1,7 +1,7 @@
 package store.controller;
 
 import java.util.List;
-import store.model.Inventory;
+import store.model.StockInventory;
 import store.model.PromotionCatalog;
 import store.model.ShoppingCart;
 import store.service.StoreService;
@@ -21,14 +21,14 @@ public class StoreController {
 
     public void run() {
         PromotionCatalog promotionCatalog = storeService.createPromotion();
-        Inventory inventory = storeService.createInventory(promotionCatalog);
+        StockInventory stockInventory = storeService.createInventory(promotionCatalog);
 //        while (true) {
-        outputView.displayInventory(inventory);
-        purchaseProduct(inventory);
+        outputView.displayInventory(stockInventory);
+        purchaseProduct(stockInventory);
 //        }
     }
 
-    private void purchaseProduct(Inventory inventory) {
+    private void purchaseProduct(StockInventory stockInventory) {
         outputView.displayPurchaseMessage();
         List<String> productData = inputView.inputProduct();
         ShoppingCart shoppingCart = storeService.createShoppingCart(productData);

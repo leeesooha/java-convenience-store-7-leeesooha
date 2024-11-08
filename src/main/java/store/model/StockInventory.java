@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Inventory {
+public class StockInventory {
     private List<ProductBox> productBoxes;
 
-    public Inventory() {
+    public StockInventory() {
         productBoxes = new ArrayList<>();
     }
 

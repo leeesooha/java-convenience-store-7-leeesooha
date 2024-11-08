@@ -2,7 +2,7 @@ package store.view;
 
 import static store.enums.Message.*;
 
-import store.model.Inventory;
+import store.model.StockInventory;
 import store.model.ProductBox;
 
 public class OutputView {
@@ -15,9 +15,9 @@ public class OutputView {
         System.out.printf(PURCHASE_MESSAGE);
     }
 
-    public void displayInventory(Inventory inventory) {
+    public void displayInventory(StockInventory stockInventory) {
         this.printWelcomeMessage();
-        for (ProductBox productBox : inventory.getProductBoxes()) {
+        for (ProductBox productBox : stockInventory.getProductBoxes()) {
             String productName = productBox.getProduct().getName();
             int price = productBox.getProduct().getPrice();
             int quantity = productBox.getQuantity();

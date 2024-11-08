@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import store.dataBase.ProductDB;
 import store.dataBase.PromotionDB;
 import store.model.Product;
-import store.model.Inventory;
+import store.model.StockInventory;
 import store.model.ProductBox;
 import store.model.Promotion;
 import store.model.PromotionCatalog;
@@ -23,18 +23,18 @@ public class StoreService {
         this.productDB = new ProductDB();
     }
 
-    public Inventory createInventory(PromotionCatalog promotionCatalog) {
+    public StockInventory createInventory(PromotionCatalog promotionCatalog) {
         List<String> products = productDB.findProduct();
-        Inventory inventory = new Inventory();
+        StockInventory stockInventory = new StockInventory();
 
         products.stream()
-                .map(productData -> toProductBox(productData, promotionCatalog, inventory))
-                .forEach(inventory::addProductBox);
+                .map(productData -> toProductBox(productData, promotionCatalog, stockInventory))
+                .forEach(stockInventory::addProductBox);
 
-        return inventory;
+        return stockInventory;
     }
 
-    private ProductBox toProductBox(String productData, PromotionCatalog promotionCatalog, Inventory inventory) {
+    private ProductBox toProductBox(String productData, PromotionCatalog promotionCatalog, StockInventory stockInventory) {
         List<String> productInfo = Arrays.asList(productData.split(","));
         String productName = productInfo.get(0);
         int price = Integer.parseInt(productInfo.get(1));
@@ -42,12 +42,12 @@ public class StoreService {
         String promotionName = productInfo.get(3);
 
         Promotion promotion = findOrCreatePromotion(promotionCatalog, promotionName);
-        Product product = findOrCreateProduct(inventory, productName, price);
+        Product product = findOrCreateProduct(stockInventory, productName, price);
         return new ProductBox(product, promotion, quantity);
     }
 
-    private Product findOrCreateProduct(Inventory inventory, String productName, int price) {
-        Product product = inventory.findProductByProductBox(productName);
+    private Product findOrCreateProduct(StockInventory stockInventory, String productName, int price) {
+        Product product = stockInventory.findProductByProductBox(productName);
 
         if (product == null) {
             product = new Product(productName, price);
