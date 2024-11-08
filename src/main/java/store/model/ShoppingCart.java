@@ -3,9 +3,13 @@ package store.model;
 import java.util.List;
 
 public class ShoppingCart {
-    List<Product> products;
+    List<ShoppingItem> ShoppingItems;
 
-    public ShoppingCart (List<Product> products) {
-        this.products = products;
+    public ShoppingCart (List<ShoppingItem> ShoppingItem) {
+        this.ShoppingItems = ShoppingItem;
+    }
+
+    public List<ShoppingItem> getShoppingItems() {
+        return ShoppingItems;
     }
 }

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import store.dataBase.ProductDB;
 import store.dataBase.PromotionDB;
 import store.model.Product;
+import store.model.ShoppingItem;
 import store.model.StockInventory;
 import store.model.ProductBox;
 import store.model.Promotion;
@@ -47,7 +48,7 @@ public class StoreService {
     }
 
     private Product findOrCreateProduct(StockInventory stockInventory, String productName, int price) {
-        Product product = stockInventory.findProductByProductBox(productName);
+        Product product = stockInventory.findProductByProductName(productName);
 
         if (product == null) {
             product = new Product(productName, price);
@@ -86,21 +87,21 @@ public class StoreService {
         return new Promotion(name, buy, get, startDate, endDate);
     }
 
-    public List<Product> toProduct(List<String> productData) {
-        List<String> cleanedProductData = productData.stream()
+    public List<ShoppingItem> toShoppingItem(List<String> shoppingItemData) {
+        List<String> cleanedShoppingItemData = shoppingItemData.stream()
                 .map(product -> product.replaceAll("^\\[|\\]$", ""))
                 .collect(Collectors.toList());
-        List<Product> products = new ArrayList<>();
+        List<ShoppingItem> ShoppingItem = new ArrayList<>();
 
-        for (String oneProduct : cleanedProductData) {
-            String[] productField = oneProduct.split("-");
-            products.add(new Product(productField[0], Integer.parseInt(productField[1])));
+        for (String oneShoppingItem : cleanedShoppingItemData) {
+            String[] shoppingItemField = oneShoppingItem.split("-");
+            ShoppingItem.add(new ShoppingItem(shoppingItemField[0], Integer.parseInt(shoppingItemField[1])));
         }
-        return products;
+        return ShoppingItem;
     }
 
-    public ShoppingCart createShoppingCart(List<String> productData) {
-        List<Product> products = this.toProduct(productData);
-        return new ShoppingCart(products);
+    public ShoppingCart createShoppingCart(List<String> shoppingItemData) {
+        List<ShoppingItem> shoppingItems = this.toShoppingItem(shoppingItemData);
+        return new ShoppingCart(shoppingItems);
     }
 }
