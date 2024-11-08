@@ -113,4 +113,12 @@ public class StoreService {
             }
         }
     }
+
+    public void checkAllExistProductName(StockInventory stockInventory, ShoppingCart shoppingCart) {
+        for (ShoppingItem shoppingItem : shoppingCart.getShoppingItems()) {
+            if (!stockInventory.isExistProductName(shoppingItem.getName())) {
+                throw new IllegalArgumentException(Error.NONE_EXIST_STOCK_MESSAGE.getErrorMessage());
+            }
+        }
+    }
 }

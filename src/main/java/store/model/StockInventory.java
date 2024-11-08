@@ -66,4 +66,12 @@ public class StockInventory {
         return (totalQuantity >= count);
     }
 
+    public boolean isExistProductName(String productName) {
+        for (ProductBox productBox : productBoxes) {
+            if (productBox.getProduct().getName().equals(productName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

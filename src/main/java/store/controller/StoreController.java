@@ -34,6 +34,7 @@ public class StoreController {
             List<String> productData = inputView.inputProduct();
             ShoppingCart shoppingCart = storeService.createShoppingCart(productData);
             try {
+                storeService.checkAllExistProductName(stockInventory, shoppingCart);
                 storeService.checkAllStockAvailable(stockInventory, shoppingCart);
             } catch (IllegalArgumentException e){
                 outputView.display(e.getMessage());
