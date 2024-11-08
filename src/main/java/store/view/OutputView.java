@@ -8,11 +8,11 @@ import store.model.ProductBox;
 public class OutputView {
 
     public void printWelcomeMessage() {
-        System.out.println(WELCOME);
+        System.out.println(WELCOME_MESSAGE);
     }
 
     public void displayPurchaseMessage() {
-        System.out.printf("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])\n");
+        System.out.printf(PURCHASE_MESSAGE);
     }
 
     public void displayInventory(Inventory inventory) {
