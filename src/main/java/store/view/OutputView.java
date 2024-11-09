@@ -43,6 +43,7 @@ public class OutputView {
             applyMembershipDiscount = (int) (discountRate * totalNormalPrice);
         }
         System.out.printf("멤버십할인\t\t\t-%,d\n", applyMembershipDiscount);
+        System.out.printf("내실돈\t\t\t %,d\n\n", totalPrice - applyMembershipDiscount);
     }
 
     public void printWelcomeMessage() {
