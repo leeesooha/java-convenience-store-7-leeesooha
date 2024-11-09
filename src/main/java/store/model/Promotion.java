@@ -28,4 +28,16 @@ public class Promotion {
     public String getName() {
         return name;
     }
+
+    public int getBuyPlusGet() {
+        return this.get + this.buy;
+    }
+
+    public int getBuy() {
+        return buy;
+    }
+
+    public int getGet() {
+        return get;
+    }
 }
