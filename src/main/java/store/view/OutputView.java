@@ -39,6 +39,10 @@ public class OutputView {
         System.out.printf("==============================\n");
         System.out.printf("총구매액\t\t%,d\t%,d\n", totalQuantity, totalPrice);
         System.out.printf("행사할인\t\t\t-%,d\n", totalPromotionPrice);
+        if (discountRate != 0) {
+            applyMembershipDiscount = (int) (discountRate * totalNormalPrice);
+        }
+        System.out.printf("멤버십할인\t\t\t-%,d\n", applyMembershipDiscount);
     }
 
     public void printWelcomeMessage() {
