@@ -74,4 +74,13 @@ public class StockInventory {
         }
         return false;
     }
+
+    public int findPriceByProductName(String productName) {
+        for (ProductBox productBox : productBoxes) {
+            if (productBox.getProduct().getName().equals(productName)) {
+                return productBox.getProduct().getPrice();
+            }
+        }
+        return 0;
+    }
 }

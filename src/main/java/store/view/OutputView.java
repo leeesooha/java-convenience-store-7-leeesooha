@@ -2,10 +2,43 @@ package store.view;
 
 import static store.enums.Message.*;
 
+import store.model.ShoppingCart;
+import store.model.ShoppingItem;
 import store.model.StockInventory;
 import store.model.ProductBox;
 
 public class OutputView {
+
+    public void displayReceipt(StockInventory stockInventory, ShoppingCart shoppingCart,
+                               double discountRate) {
+        int totalQuantity = 0;
+        int totalPrice = 0;
+        int totalNormalPrice = 0;
+        int totalPromotionPrice = 0;
+        int applyMembershipDiscount = 0;
+        System.out.printf("===========W 편의점=============\n");
+        System.out.printf("상품명\t\t수량\t금액\n");
+        for (ShoppingItem shoppingItem : shoppingCart.getShoppingItems()) {
+            int price = stockInventory.findPriceByProductName(shoppingItem.getName()) * (shoppingItem.getQuantity()
+                    + shoppingItem.getPromotionQuantity());
+            totalQuantity += shoppingItem.getQuantity();
+            totalPrice += stockInventory.findPriceByProductName(shoppingItem.getName()) * (shoppingItem.getQuantity());
+            totalNormalPrice +=
+                    stockInventory.findPriceByProductName(shoppingItem.getName()) * shoppingItem.getQuantity();
+            totalPromotionPrice +=
+                    stockInventory.findPriceByProductName(shoppingItem.getName()) * shoppingItem.getPromotionQuantity();
+            System.out.printf("%s\t\t%,d\t%,d\n", shoppingItem.getName(),
+                    shoppingItem.getQuantity() + shoppingItem.getPromotionQuantity(), price);
+        }
+        System.out.printf("===========증\t정=============\n");
+        for (ShoppingItem shoppingItem : shoppingCart.getShoppingItems()) {
+            if (shoppingItem.getPromotionQuantity() != 0) {
+                System.out.printf("%s\t\t%,d\n", shoppingItem.getName(), shoppingItem.getPromotionQuantity());
+            }
+        }
+        System.out.printf("==============================\n");
+        System.out.printf("총구매액\t\t%,d\t%,d\n", totalQuantity, totalPrice);
+    }
 
     public void printWelcomeMessage() {
         System.out.println(WELCOME_MESSAGE);
@@ -41,7 +74,7 @@ public class OutputView {
     }
 
     public void display(String message) {
-        System.out.println(message);
+        System.out.print(message);
     }
 
     public void displayConfirmPurchase(String productName, int notApplyPromotionQuantity) {

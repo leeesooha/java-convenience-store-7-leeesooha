@@ -25,10 +25,6 @@ public class StoreController {
     public void run() {
         PromotionCatalog promotionCatalog = storeService.createPromotion();
         StockInventory stockInventory = storeService.createInventory(promotionCatalog);
-//        while (true) {
-        outputView.displayInventory(stockInventory);
-        purchaseProduct(stockInventory);
-//        }
         ShoppingCart shoppingCart = new ShoppingCart();
         while (true) {
             outputView.displayInventory(stockInventory);
@@ -39,6 +35,11 @@ public class StoreController {
             }
         }
     }
+    private void receiptHandler(StockInventory stockInventory, ShoppingCart shoppingCart) {
+        outputView.display(Message.MEMBERSHIP_MESSAGE);
+        if (inputView.inputYesOrNo()) {
+            outputView.displayReceipt(stockInventory, shoppingCart, Discount.MEMBERSHIP_DISCOUNT_PERCENT);
+        }
     }
 
     private void purchaseProduct(StockInventory stockInventory, ShoppingCart shoppingCart) {
