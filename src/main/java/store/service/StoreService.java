@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PropertyPermission;
 import java.util.stream.Collectors;
 import store.dataBase.ProductDB;
 import store.dataBase.PromotionDB;
@@ -29,11 +30,31 @@ public class StoreService {
         List<String> products = productDB.findProduct();
         StockInventory stockInventory = new StockInventory();
 
-        products.stream()
-                .map(productData -> toProductBox(productData, promotionCatalog, stockInventory))
-                .forEach(stockInventory::addProductBox);
-
+        for (String productData : products) {
+            ProductBox productBox = toProductBox(productData, promotionCatalog, stockInventory);
+            stockInventory.addProductBox(productBox);
+        }
+        adjustStockInventory(stockInventory);
         return stockInventory;
+    }
+
+    private void adjustStockInventory(StockInventory stockInventory) {
+        List<ProductBox> additionalProductBoxes = new ArrayList<>(); // 추가할 항목을 저장할 임시 리스트
+
+        for (ProductBox productBox : stockInventory.getProductBoxes()) {
+            ProductBox normalProductBox = stockInventory.findNormalProductBoxByProductName(
+                    productBox.getProduct().getName());
+            if (!productBox.getPromotion().getName().isEmpty() && normalProductBox == null) {
+                Product addProduct = new Product(productBox.getProduct().getName(), productBox.getProduct().getPrice());
+                ProductBox addProductBox = new ProductBox(addProduct, new Promotion(""), 0);
+                additionalProductBoxes.add(addProductBox); // 임시 리스트에 추가
+            }
+        }
+
+        // 순회가 끝난 후 stockInventory에 새로운 ProductBox들을 추가
+        for (ProductBox additionalProductBox : additionalProductBoxes) {
+            stockInventory.addProductBox(additionalProductBox);
+        }
     }
 
     private ProductBox toProductBox(String productData, PromotionCatalog promotionCatalog,
