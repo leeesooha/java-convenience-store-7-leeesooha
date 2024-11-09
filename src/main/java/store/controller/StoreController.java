@@ -72,6 +72,7 @@ public class StoreController {
     private List<ShoppingItem> addProductToCart() {
         outputView.displayPurchaseMessage();
         List<String> productData = inputView.inputProduct();
+        Validator.checkPurchaseFormat(productData);
         return storeService.createShoppingCart(productData);
     }
 
