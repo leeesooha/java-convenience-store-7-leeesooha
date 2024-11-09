@@ -29,11 +29,22 @@ public class StoreController {
         outputView.displayInventory(stockInventory);
         purchaseProduct(stockInventory);
 //        }
+        ShoppingCart shoppingCart = new ShoppingCart();
+        while (true) {
+            outputView.displayInventory(stockInventory);
+            purchaseProduct(stockInventory, shoppingCart);
+            receiptHandler(stockInventory, shoppingCart);
+            if (!askToContinueShopping()) {
+                return;
+            }
+        }
+    }
     }
 
-    private void purchaseProduct(StockInventory stockInventory) {
+    private void purchaseProduct(StockInventory stockInventory, ShoppingCart shoppingCart) {
         while (true) {
-            ShoppingCart shoppingCart = addProductToCart();
+            shoppingCart.addShoppingItems(addProductToCart());
+//            shoppingCart = addProductToCart();
             try {
                 storeService.validateUserInput(stockInventory, shoppingCart);
                 reduceStockByPurchase(stockInventory, shoppingCart);
@@ -45,7 +56,7 @@ public class StoreController {
         }
     }
 
-    private ShoppingCart addProductToCart() {
+    private List<ShoppingItem> addProductToCart() {
         outputView.displayPurchaseMessage();
         List<String> productData = inputView.inputProduct();
         return storeService.createShoppingCart(productData);

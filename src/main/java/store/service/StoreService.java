@@ -36,7 +36,8 @@ public class StoreService {
         return stockInventory;
     }
 
-    private ProductBox toProductBox(String productData, PromotionCatalog promotionCatalog, StockInventory stockInventory) {
+    private ProductBox toProductBox(String productData, PromotionCatalog promotionCatalog,
+                                    StockInventory stockInventory) {
         List<String> productInfo = Arrays.asList(productData.split(","));
         String productName = productInfo.get(0);
         int price = Integer.parseInt(productInfo.get(1));
@@ -101,9 +102,9 @@ public class StoreService {
         return ShoppingItem;
     }
 
-    public ShoppingCart createShoppingCart(List<String> shoppingItemData) {
+    public List<ShoppingItem> createShoppingCart(List<String> shoppingItemData) {
         List<ShoppingItem> shoppingItems = this.toShoppingItem(shoppingItemData);
-        return new ShoppingCart(shoppingItems);
+        return shoppingItems;
     }
 
     public void checkAllStockAvailable(StockInventory stockInventory, ShoppingCart shoppingCart) {
