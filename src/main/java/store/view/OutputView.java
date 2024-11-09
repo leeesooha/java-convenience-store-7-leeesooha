@@ -38,6 +38,7 @@ public class OutputView {
         }
         System.out.printf("==============================\n");
         System.out.printf("총구매액\t\t%,d\t%,d\n", totalQuantity, totalPrice);
+        System.out.printf("행사할인\t\t\t-%,d\n", totalPromotionPrice);
     }
 
     public void printWelcomeMessage() {
