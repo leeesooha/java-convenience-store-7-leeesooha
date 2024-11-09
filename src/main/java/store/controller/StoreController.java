@@ -1,6 +1,7 @@
 package store.controller;
 
 import java.util.List;
+import store.enums.Discount;
 import store.enums.Message;
 import store.model.ProductBox;
 import store.model.ShoppingItem;
@@ -35,6 +36,15 @@ public class StoreController {
             }
         }
     }
+
+    private boolean askToContinueShopping() {
+        outputView.display(Message.ASK_CONTINUE_SHOPPING);
+        if (!inputView.inputYesOrNo()) {
+            return false;
+        }
+        return true;
+    }
+
     private void receiptHandler(StockInventory stockInventory, ShoppingCart shoppingCart) {
         outputView.display(Message.MEMBERSHIP_MESSAGE);
         if (inputView.inputYesOrNo()) {
