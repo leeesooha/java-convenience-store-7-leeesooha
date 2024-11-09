@@ -9,6 +9,7 @@ import store.model.StockInventory;
 import store.model.PromotionCatalog;
 import store.model.ShoppingCart;
 import store.service.StoreService;
+import store.validator.Validator;
 import store.view.InputView;
 import store.view.OutputView;
 
@@ -49,18 +50,19 @@ public class StoreController {
         outputView.display(Message.MEMBERSHIP_MESSAGE);
         if (inputView.inputYesOrNo()) {
             outputView.displayReceipt(stockInventory, shoppingCart, Discount.MEMBERSHIP_DISCOUNT_PERCENT);
+            return;
         }
+        outputView.displayReceipt(stockInventory, shoppingCart, 0);
     }
 
     private void purchaseProduct(StockInventory stockInventory, ShoppingCart shoppingCart) {
         while (true) {
-            shoppingCart.addShoppingItems(addProductToCart());
-//            shoppingCart = addProductToCart();
             try {
+                shoppingCart.addShoppingItems(addProductToCart());
                 storeService.validateUserInput(stockInventory, shoppingCart);
                 reduceStockByPurchase(stockInventory, shoppingCart);
             } catch (IllegalArgumentException e) {
-                outputView.display(e.getMessage());
+                outputView.display(e.getMessage() + "\n");
                 continue;
             }
             return;
