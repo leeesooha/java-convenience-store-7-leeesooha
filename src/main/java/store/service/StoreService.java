@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import store.dataBase.ProductDB;
-import store.dataBase.PromotionDB;
+import store.dataBase.ProductFileReader;
+import store.dataBase.PromotionFileReader;
 import store.constant.Error;
 import store.model.Product;
 import store.model.ShoppingItem;
@@ -17,16 +17,16 @@ import store.model.PromotionCatalog;
 import store.model.ShoppingCart;
 
 public class StoreService {
-    private final PromotionDB promotionDB;
-    private final ProductDB productDB;
+    private final PromotionFileReader promotionFileReader;
+    private final ProductFileReader productFileReader;
 
     public StoreService() {
-        this.promotionDB = new PromotionDB();
-        this.productDB = new ProductDB();
+        this.promotionFileReader = new PromotionFileReader();
+        this.productFileReader = new ProductFileReader();
     }
 
     public StockInventory createInventory(PromotionCatalog promotionCatalog) {
-        List<String> products = productDB.findProduct();
+        List<String> products = productFileReader.readProduct();
         StockInventory stockInventory = new StockInventory();
 
         for (String productData : products) {
@@ -91,7 +91,7 @@ public class StoreService {
 
     public PromotionCatalog createPromotion() {
         PromotionCatalog promotionCatalog = new PromotionCatalog();
-        List<String> promotions = promotionDB.findPromotion();
+        List<String> promotions = promotionFileReader.readPromotion();
 
         promotions.stream().
                 map(this::toPromotion).

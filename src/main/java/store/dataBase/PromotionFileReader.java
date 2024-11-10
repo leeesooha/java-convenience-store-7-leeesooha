@@ -7,12 +7,12 @@ import java.util.List;
 import store.constant.Error;
 import store.constant.File;
 
-public class ProductDB {
+public class PromotionFileReader {
 
-    public List<String> findProduct() {
+    public List<String> readPromotion() {
         while (true) {
             try {
-                List<String> input = Files.readAllLines(Paths.get(File.PRODUCT_FILE_PATH));
+                List<String> input = Files.readAllLines(Paths.get(File.PROMOTION_FILE_PATH));
                 input.remove(File.COLUMN_HEADERS);
                 return input;
             } catch (IOException e) {
