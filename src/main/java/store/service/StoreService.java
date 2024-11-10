@@ -44,8 +44,7 @@ public class StoreService {
                     productBox.getProduct().getName());
             if (!productBox.getPromotion().getName().isEmpty() && normalProductBox == null) {
                 Product addProduct = new Product(productBox.getProduct().getName(), productBox.getProduct().getPrice());
-                ProductBox addProductBox = new ProductBox(addProduct, new Promotion(""), 0);
-                additionalProductBoxes.add(addProductBox); // 임시 리스트에 추가
+                additionalProductBoxes.add(new ProductBox(addProduct, new Promotion(""), 0)); // 임시 리스트에 추가
             }
         }
         addProductBoxes(stockInventory, additionalProductBoxes);
