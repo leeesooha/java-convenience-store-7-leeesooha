@@ -58,7 +58,6 @@ public class StoreController {
     private void purchaseProduct(StockInventory stockInventory, ShoppingCart shoppingCart) {
         while (true) {
             try {
-                shoppingCart.clearCart();
                 shoppingCart.addShoppingItems(addProductToCart());
                 storeService.validateUserInput(stockInventory, shoppingCart);
                 reduceStockByPurchase(stockInventory, shoppingCart);

@@ -44,6 +44,8 @@ public class OutputView {
         }
         System.out.printf("멤버십할인\t\t\t-%,d\n", applyMembershipDiscount);
         System.out.printf("내실돈\t\t\t %,d\n\n", totalPrice - applyMembershipDiscount - totalPromotionPrice);
+
+        shoppingCart.clearCart();
     }
 
     public void printWelcomeMessage() {
