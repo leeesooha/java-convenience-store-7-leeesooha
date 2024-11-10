@@ -176,7 +176,8 @@ public class StoreController {
     private void reducePromotionQuantity(ShoppingItem shoppingItem, ProductBox promotionProductBox) {
         promotionProductBox.decreaseQuantityBy(shoppingItem.getQuantity());
         if (shoppingItem.getQuantity() % promotionProductBox.getPromotion().getBuyPlusGet() == 0) {
-            shoppingItem.setPromotionQuantity(shoppingItem.getQuantity() / promotionProductBox.getPromotion().getBuyPlusGet());
+            shoppingItem.setPromotionQuantity(
+                    shoppingItem.getQuantity() / promotionProductBox.getPromotion().getBuyPlusGet());
             shoppingItem.setQuantity(shoppingItem.getQuantity() - shoppingItem.getPromotionQuantity());
             return;
         }
