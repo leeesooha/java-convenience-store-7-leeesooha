@@ -84,4 +84,13 @@ public class StockInventoryTest {
 
         assertTrue(stockInventory.isStockAvailable(PRODUCT_NAME_1, PRODUCT_QUANTITY * 2));
     }
+
+    @Test
+    @DisplayName("상품명이 존재하는지 확인하는 테스트")
+    void isExistProductName() {
+        assertTrue(stockInventory.isExistProductName(PRODUCT_NAME_1));
+        assertTrue(stockInventory.isExistProductName(PRODUCT_NAME_2));
+        assertTrue(stockInventory.isExistProductName(PRODUCT_NAME_3));
+        assertFalse(stockInventory.isExistProductName(NONE_EXIST_PRODUCT_NAME));
+    }
 }
