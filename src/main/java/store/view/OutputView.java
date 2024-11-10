@@ -13,7 +13,7 @@ public class OutputView {
                                double discountRate) {
         int totalQuantity = 0;
         int totalPrice = 0;
-        int totalNormalPrice = 0;
+        int notApplyPromotionlPrice = 0;
         int totalPromotionPrice = 0;
         int applyMembershipDiscount = 0;
         System.out.printf("===========W 편의점=============\n");
@@ -21,10 +21,10 @@ public class OutputView {
         for (ShoppingItem shoppingItem : shoppingCart.getShoppingItems()) {
             int price = stockInventory.findPriceByProductName(shoppingItem.getName()) * (shoppingItem.getQuantity()
                     + shoppingItem.getPromotionQuantity());
-            totalQuantity += shoppingItem.getQuantity();
-            totalPrice += stockInventory.findPriceByProductName(shoppingItem.getName()) * (shoppingItem.getQuantity());
-            totalNormalPrice +=
-                    stockInventory.findPriceByProductName(shoppingItem.getName()) * shoppingItem.getQuantity();
+            totalQuantity += shoppingItem.getQuantity() + shoppingItem.getPromotionQuantity();
+            totalPrice += stockInventory.findPriceByProductName(shoppingItem.getName()) * ((shoppingItem.getQuantity() + shoppingItem.getPromotionQuantity()));
+            notApplyPromotionlPrice +=
+                    stockInventory.findPriceByProductName(shoppingItem.getName()) * (shoppingItem.getQuantity() - shoppingItem.getPromotionQuantity());
             totalPromotionPrice +=
                     stockInventory.findPriceByProductName(shoppingItem.getName()) * shoppingItem.getPromotionQuantity();
             System.out.printf("%s\t\t%,d\t%,d\n", shoppingItem.getName(),
@@ -40,10 +40,10 @@ public class OutputView {
         System.out.printf("총구매액\t\t%,d\t%,d\n", totalQuantity, totalPrice);
         System.out.printf("행사할인\t\t\t-%,d\n", totalPromotionPrice);
         if (discountRate != 0) {
-            applyMembershipDiscount = (int) (discountRate * totalNormalPrice);
+            applyMembershipDiscount = (int) (discountRate * notApplyPromotionlPrice);
         }
         System.out.printf("멤버십할인\t\t\t-%,d\n", applyMembershipDiscount);
-        System.out.printf("내실돈\t\t\t %,d\n\n", totalPrice - applyMembershipDiscount);
+        System.out.printf("내실돈\t\t\t %,d\n\n", totalPrice - applyMembershipDiscount - totalPromotionPrice);
     }
 
     public void printWelcomeMessage() {
