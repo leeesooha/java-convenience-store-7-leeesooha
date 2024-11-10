@@ -6,7 +6,8 @@ public enum Error {
     NONE_EXIST_STOCK_MESSAGE("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요."),
     PURCHASE_FORMAT_MESSAGE("[ERROR] 잘못된 입력입니다. 다시 입력해 주세요."),
     FILE_ERROR("[ERROR] 파일 읽기에 실패하였습니다."),
-    EMPTY_INPUT("[ERROR] 빈 입력입니다.");
+    EMPTY_INPUT("[ERROR] 빈 입력입니다."),
+    DUPLICATE_PRODUCT_NAME("[ERROR] 중복된 상품명은 입력할 수 없습니다.");
 
     private final String errorMessage;
 
