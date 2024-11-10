@@ -58,6 +58,7 @@ public class StoreController {
     private void purchaseProduct(StockInventory stockInventory, ShoppingCart shoppingCart) {
         while (true) {
             try {
+                shoppingCart.clearCart();
                 shoppingCart.addShoppingItems(addProductToCart());
                 storeService.validateUserInput(stockInventory, shoppingCart);
                 reduceStockByPurchase(stockInventory, shoppingCart);
@@ -120,9 +121,12 @@ public class StoreController {
 
     private boolean isEnoughStockPromotion(ShoppingItem shoppingItem, int ableBonusQuantity,
                                            ProductBox promotionProductBox) {
-        int needStockQuantity = shoppingItem.getQuantity() + ableBonusQuantity;
-
-        return needStockQuantity <= promotionProductBox.getQuantity();
+        int needPromotionStockQuantity = 0;
+//        if (shoppingItem.getQuantity() % promotionProductBox.getPromotion().getBuyPlusGet() == 0) {
+//            ableBonusQuantity = 0;
+//        }
+        needPromotionStockQuantity = shoppingItem.getQuantity() + ableBonusQuantity;
+        return needPromotionStockQuantity <= promotionProductBox.getQuantity();
     }
 
     private void handleEnoughPromotionStock(ShoppingItem shoppingItem, ProductBox promotionProductBox,
@@ -171,6 +175,11 @@ public class StoreController {
 
     private void reducePromotionQuantity(ShoppingItem shoppingItem, ProductBox promotionProductBox) {
         promotionProductBox.decreaseQuantityBy(shoppingItem.getQuantity());
+        if (shoppingItem.getQuantity() % promotionProductBox.getPromotion().getBuyPlusGet() == 0) {
+            shoppingItem.setPromotionQuantity(shoppingItem.getQuantity() / promotionProductBox.getPromotion().getBuyPlusGet());
+            shoppingItem.setQuantity(shoppingItem.getQuantity() - shoppingItem.getPromotionQuantity());
+            return;
+        }
         shoppingItem.setPromotionQuantity(
                 shoppingItem.getQuantity() / promotionProductBox.getPromotion().getBuyPlusGet());
     }

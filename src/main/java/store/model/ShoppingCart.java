@@ -30,4 +30,8 @@ public class ShoppingCart {
         }
         return 0;
     }
+
+    public void clearCart() {
+        this.ShoppingItems = new ArrayList<>();
+    }
 }
