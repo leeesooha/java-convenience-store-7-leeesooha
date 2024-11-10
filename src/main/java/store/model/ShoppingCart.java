@@ -10,10 +10,6 @@ public class ShoppingCart {
         this.ShoppingItems = new ArrayList<>();
     }
 
-    public ShoppingCart(List<ShoppingItem> ShoppingItem) {
-        this.ShoppingItems = ShoppingItem;
-    }
-
     public List<ShoppingItem> getShoppingItems() {
         return ShoppingItems;
     }
