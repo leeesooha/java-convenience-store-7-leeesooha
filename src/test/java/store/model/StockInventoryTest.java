@@ -75,4 +75,13 @@ public class StockInventoryTest {
     void findNormalProductBoxByProductName() {
         assertEquals(stockInventory.findNormalProductBoxByProductName(PRODUCT_NAME_1), normalProductBox1);
     }
+
+    @Test
+    @DisplayName("프로모션 재고와 일반재고가 상품구매수만큼 충분한지 확인하는 기능 테스트")
+    void isStockAvailable() {
+        assertTrue(stockInventory.isStockAvailable(PRODUCT_NAME_2, PRODUCT_QUANTITY));
+        assertFalse(stockInventory.isStockAvailable(PRODUCT_NAME_2, PRODUCT_QUANTITY + 1));
+
+        assertTrue(stockInventory.isStockAvailable(PRODUCT_NAME_1, PRODUCT_QUANTITY * 2));
+    }
 }
