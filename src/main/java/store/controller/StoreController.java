@@ -81,7 +81,7 @@ public class StoreController {
             ProductBox promotionProductBox = stockInventory.findPromotionProductBoxByProductName(
                     shoppingItem.getName());
             //일반재고 일시
-            if (promotionProductBox == null) {
+            if (promotionProductBox == null || !promotionProductBox.isPromotionActive()) {
                 reduceNormalStock(stockInventory, shoppingItem);
                 continue;
             }

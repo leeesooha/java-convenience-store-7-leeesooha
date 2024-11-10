@@ -42,4 +42,11 @@ public class ProductBox {
         }
         this.quantity -= count;
     }
+
+    public boolean isPromotionActive() {
+        if (this.promotion.isPromotionActive()) {
+            return true;
+        }
+        return false;
+    }
 }

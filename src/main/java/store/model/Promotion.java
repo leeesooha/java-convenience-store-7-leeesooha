@@ -1,5 +1,6 @@
 package store.model;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDate;
 
 public class Promotion {
@@ -39,5 +40,18 @@ public class Promotion {
 
     public int getGet() {
         return get;
+    }
+
+    public boolean isPromotionActive() {
+        if (start_date == null || end_date == null) {
+            return false;
+        }
+
+        LocalDate currentDate = DateTimes.now().toLocalDate();
+        if ((currentDate.equals(this.start_date) || currentDate.isAfter(this.start_date)) && (currentDate.equals(
+                this.end_date) || currentDate.isBefore(this.end_date))) {
+            return true;
+        }
+        return false;
     }
 }
