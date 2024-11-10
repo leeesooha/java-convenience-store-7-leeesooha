@@ -15,10 +15,6 @@ public class ProductBox {
         this.promotion = promotion;
     }
 
-    public void applyPromotion(Promotion promotion) {
-        this.setPromotion(promotion);
-    }
-
     public boolean isMatchProduct(String productName) {
         return product.getName().equals(productName);
     }

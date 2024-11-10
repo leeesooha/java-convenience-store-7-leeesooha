@@ -22,15 +22,6 @@ public class ShoppingCart {
         this.ShoppingItems.addAll(shoppingItems);
     }
 
-    public int findBonusQuantityByProductName(String productName) {
-        for (ShoppingItem shoppingItem : ShoppingItems) {
-            if (shoppingItem.getName().equals(productName)) {
-                shoppingItem.getPromotionQuantity();
-            }
-        }
-        return 0;
-    }
-
     public void clearCart() {
         this.ShoppingItems = new ArrayList<>();
     }
