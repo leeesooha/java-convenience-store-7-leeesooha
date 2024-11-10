@@ -48,8 +48,8 @@ public class Promotion {
         }
 
         LocalDate currentDate = DateTimes.now().toLocalDate();
-        if ((currentDate.equals(this.start_date) || currentDate.isAfter(this.start_date)) && (currentDate.equals(
-                this.end_date) || currentDate.isBefore(this.end_date))) {
+        if ((currentDate.equals(this.start_date) || currentDate.isAfter(this.start_date))
+                && (currentDate.equals(this.end_date) || currentDate.isBefore(this.end_date))) {
             return true;
         }
         return false;
