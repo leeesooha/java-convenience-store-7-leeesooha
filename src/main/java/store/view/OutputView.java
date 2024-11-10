@@ -1,6 +1,17 @@
 package store.view;
 
 import static store.constant.Message.*;
+import static store.constant.Receipt.BONUS_DETAIL_FORMAT;
+import static store.constant.Receipt.BONUS_HEADER;
+import static store.constant.Receipt.FINAL_AMOUNT_FORMAT;
+import static store.constant.Receipt.ITEM_DETAIL_FORMAT;
+import static store.constant.Receipt.MAX_MEMBERSHIP_AMOUNT;
+import static store.constant.Receipt.MEMBERSHIP_DISCOUNT_FORMAT;
+import static store.constant.Receipt.PROMOTION_DISCOUNT_FORMAT;
+import static store.constant.Receipt.RECEIPT_COLUMN_HEADER;
+import static store.constant.Receipt.RECEIPT_HEADER;
+import static store.constant.Receipt.RECEIPT_SEPARATOR;
+import static store.constant.Receipt.TOTAL_QUANTITY_PRICE_FORMAT;
 
 import store.dto.ReceiptDto;
 import store.model.ShoppingCart;
@@ -23,29 +34,29 @@ public class OutputView {
     }
 
     private void displayReceipResult(ReceiptDto receiptDto, double discountRate) {
-        System.out.printf("==============================\n");
-        System.out.printf("총구매액\t\t%,d\t%,d\n", receiptDto.getTotalQuantity(), receiptDto.getTotalPrice());
-        System.out.printf("행사할인\t\t\t-%,d\n", receiptDto.getTotalPromotionPrice());
+        System.out.printf(RECEIPT_SEPARATOR);
+        System.out.printf(TOTAL_QUANTITY_PRICE_FORMAT, receiptDto.getTotalQuantity(), receiptDto.getTotalPrice());
+        System.out.printf(PROMOTION_DISCOUNT_FORMAT, receiptDto.getTotalPromotionPrice());
         if (discountRate != 0) {
             calculateMembership(receiptDto, discountRate);
         }
-        System.out.printf("멤버십할인\t\t\t-%,d\n", receiptDto.getApplyMembershipDiscount());
-        System.out.printf("내실돈\t\t\t %,d\n\n", receiptDto.getTotalPrice() -
+        System.out.printf(MEMBERSHIP_DISCOUNT_FORMAT, receiptDto.getApplyMembershipDiscount());
+        System.out.printf(FINAL_AMOUNT_FORMAT, receiptDto.getTotalPrice() -
                 receiptDto.getApplyMembershipDiscount() - receiptDto.getTotalPromotionPrice());
     }
 
     private void calculateMembership(ReceiptDto receiptDto, double discountRate) {
         receiptDto.setApplyMembershipDiscount((int) (discountRate * receiptDto.getNotApplyPromotionPrice()));
-        if (receiptDto.getApplyMembershipDiscount() > 8000) {
-            receiptDto.setApplyMembershipDiscount(8000);
+        if (receiptDto.getApplyMembershipDiscount() > MAX_MEMBERSHIP_AMOUNT) {
+            receiptDto.setApplyMembershipDiscount(MAX_MEMBERSHIP_AMOUNT);
         }
     }
 
     private void displayBonusRecord(ShoppingCart shoppingCart) {
-        System.out.printf("===========증\t정=============\n");
+        System.out.printf(BONUS_HEADER);
         for (ShoppingItem shoppingItem : shoppingCart.getShoppingItems()) {
-            if (shoppingItem.getPromotionQuantity() != 0) {
-                System.out.printf("%s\t\t%,d\n", shoppingItem.getName(), shoppingItem.getPromotionQuantity());
+            if (shoppingItem.getPromotionQuantity() != ZERO) {
+                System.out.printf(BONUS_DETAIL_FORMAT, shoppingItem.getName(), shoppingItem.getPromotionQuantity());
             }
         }
     }
@@ -56,17 +67,17 @@ public class OutputView {
             int price = stockInventory.findPriceByProductName(shoppingItem.getName()) * (shoppingItem.getQuantity()
                     + shoppingItem.getPromotionQuantity());
 
-            updateReceipDto(receiptDto, shoppingItem, stockInventory);
-            displayReceipResultDetail(shoppingItem, price);
+            updateReceiptDto(receiptDto, shoppingItem, stockInventory);
+            displayReceiptResultDetail(shoppingItem, price);
         }
     }
 
-    private void displayReceipResultDetail(ShoppingItem shoppingItem, int price) {
-        System.out.printf("%s\t\t%,d\t%,d\n", shoppingItem.getName(),
+    private void displayReceiptResultDetail(ShoppingItem shoppingItem, int price) {
+        System.out.printf(ITEM_DETAIL_FORMAT, shoppingItem.getName(),
                 shoppingItem.getQuantity() + shoppingItem.getPromotionQuantity(), price);
     }
 
-    private void updateReceipDto(ReceiptDto receiptDto, ShoppingItem shoppingItem, StockInventory stockInventory) {
+    private void updateReceiptDto(ReceiptDto receiptDto, ShoppingItem shoppingItem, StockInventory stockInventory) {
         receiptDto.addTotalQuantity(shoppingItem.getQuantity() + shoppingItem.getPromotionQuantity());
         receiptDto.addTotalPrice(
                 stockInventory.findPriceByProductName(shoppingItem.getName()) * ((shoppingItem.getQuantity()
@@ -79,8 +90,8 @@ public class OutputView {
     }
 
     private void displayReceiptHeader() {
-        System.out.printf("===========W 편의점=============\n");
-        System.out.printf("상품명\t\t수량\t금액\n");
+        System.out.printf(RECEIPT_HEADER);
+        System.out.printf(RECEIPT_COLUMN_HEADER);
     }
 
     public void printWelcomeMessage() {
@@ -105,15 +116,15 @@ public class OutputView {
     }
 
     public void displayProductLine(String productName, int price, int quantity, String promotionName) {
-        promotionName = " " + promotionName;
-        if (promotionName.equals(" ")) {
-            promotionName = "";
+        promotionName = SPACE_CHARACTER + promotionName;
+        if (promotionName.equals(SPACE_CHARACTER)) {
+            promotionName = EMPTY;
         }
         if (quantity == 0) {
-            System.out.printf("- %s %,d원 재고 없음%s\n", productName, price, promotionName);
+            System.out.printf(PRODUCT_OUT_OF_STOCK_FORMAT, productName, price, promotionName);
             return;
         }
-        System.out.printf("- %s %,d원 %,d개%s\n", productName, price, quantity, promotionName);
+        System.out.printf(PRODUCT_AVAILABLE_FORMAT, productName, price, quantity, promotionName);
     }
 
     public void display(String message) {
@@ -121,12 +132,10 @@ public class OutputView {
     }
 
     public void displayConfirmPurchase(String productName, int notApplyPromotionQuantity) {
-        System.out.printf("현재 %s %d개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N)",
-                productName, notApplyPromotionQuantity);
+        System.out.printf(CONFIRM_PURCHASE_PROMOTION_MESSAGE, productName, notApplyPromotionQuantity);
     }
 
     public void displayFreeProductConfirm(String productName, int ableBonusQuantity) {
-        System.out.printf("현재 %s은(는) %d개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)",
-                productName, ableBonusQuantity);
+        System.out.printf(FREE_PRODUCT_CONFIRMATION_MESSAGE, productName, ableBonusQuantity);
     }
 }
