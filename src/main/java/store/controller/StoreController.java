@@ -14,9 +14,9 @@ import store.view.InputView;
 import store.view.OutputView;
 
 public class StoreController {
-    InputView inputView;
-    OutputView outputView;
-    StoreService storeService;
+    private final InputView inputView;
+    private final OutputView outputView;
+    private final StoreService storeService;
 
     public StoreController(InputView inputView, OutputView outputView, StoreService storeService) {
         this.inputView = inputView;

@@ -17,8 +17,8 @@ import store.model.PromotionCatalog;
 import store.model.ShoppingCart;
 
 public class StoreService {
-    PromotionDB promotionDB;
-    ProductDB productDB;
+    private final PromotionDB promotionDB;
+    private final ProductDB productDB;
 
     public StoreService() {
         this.promotionDB = new PromotionDB();
