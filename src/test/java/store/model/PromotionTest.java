@@ -8,12 +8,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PromotionTest {
-    static private final String PROMOTION_NAME = "반짝할인";
-    static private final int BUY = 2;
-    static private final int GET = 1;
-    static private final LocalDate START_DATE = LocalDate.parse("2024-10-01");
-    static private final LocalDate INVALID_END_DATE = LocalDate.parse("2024-11-10");
-    static private final LocalDate VALID_END_DATE = LocalDate.parse("2025-11-10");
+    public static final String PROMOTION_NAME = "반짝할인";
+    public static final int BUY = 2;
+    public static final int GET = 1;
+    public static final LocalDate START_DATE = LocalDate.parse("2024-10-01");
+    public static final LocalDate INVALID_END_DATE = LocalDate.parse("2024-11-10");
+    public static final LocalDate VALID_END_DATE = LocalDate.parse("2025-11-10");
 
     @Test
     @DisplayName("지난 프로모션이 활성화 안됬음을 확인하는 테스트")
