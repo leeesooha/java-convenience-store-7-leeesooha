@@ -69,4 +69,10 @@ public class StockInventoryTest {
         assertEquals(stockInventory.findPromotionProductBoxByProductName(PRODUCT_NAME_2), productBox2);
         assertEquals(stockInventory.findPromotionProductBoxByProductName(PRODUCT_NAME_3), productBox3);
     }
+
+    @Test
+    @DisplayName("상품이름으로 일반 상품 박스 찾아오는 기능 테스트")
+    void findNormalProductBoxByProductName() {
+        assertEquals(stockInventory.findNormalProductBoxByProductName(PRODUCT_NAME_1), normalProductBox1);
+    }
 }
