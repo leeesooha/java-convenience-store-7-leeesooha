@@ -7,23 +7,23 @@ public class Promotion {
     private final String name;
     private final int buy;
     private final int get;
-    private final LocalDate start_date;
-    private final LocalDate end_date;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
 
     public Promotion(String name) {
         this.name = name;
         this.buy = 0;
         this.get = 0;
-        this.start_date = null;
-        this.end_date = null;
+        this.startDate = null;
+        this.endDate = null;
     }
 
-    public Promotion(String name, int buy, int get, LocalDate start_date, LocalDate end_date) {
+    public Promotion(String name, int buy, int get, LocalDate startDate, LocalDate endDate) {
         this.name = name;
         this.buy = buy;
         this.get = get;
-        this.start_date = start_date;
-        this.end_date = end_date;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public String getName() {
@@ -43,13 +43,13 @@ public class Promotion {
     }
 
     public boolean isPromotionActive() {
-        if (start_date == null || end_date == null) {
+        if (startDate == null || endDate == null) {
             return false;
         }
 
         LocalDate currentDate = DateTimes.now().toLocalDate();
-        if ((currentDate.equals(this.start_date) || currentDate.isAfter(this.start_date))
-                && (currentDate.equals(this.end_date) || currentDate.isBefore(this.end_date))) {
+        if ((currentDate.equals(this.startDate) || currentDate.isAfter(this.startDate))
+                && (currentDate.equals(this.endDate) || currentDate.isBefore(this.endDate))) {
             return true;
         }
         return false;
