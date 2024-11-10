@@ -23,10 +23,6 @@ public class ShoppingItem {
         this.quantity -= notApplyPromotionQuantity;
     }
 
-    public void increaseQuantityBy(int count) {
-        this.quantity += count;
-    }
-
     public void setPromotionQuantity(int promotionQuantity) {
         this.promotionQuantity = promotionQuantity;
     }
