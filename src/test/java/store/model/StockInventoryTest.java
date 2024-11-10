@@ -93,4 +93,11 @@ public class StockInventoryTest {
         assertTrue(stockInventory.isExistProductName(PRODUCT_NAME_3));
         assertFalse(stockInventory.isExistProductName(NONE_EXIST_PRODUCT_NAME));
     }
+
+    @Test
+    @DisplayName("상품명으로 상품가격 확인하는 테스트")
+    void findPriceByProductName() {
+        assertEquals(stockInventory.findPriceByProductName(PRODUCT_NAME_1), PRODUCT_PRICE_1);
+        assertEquals(stockInventory.findPriceByProductName(PRODUCT_NAME_2), PRODUCT_PRICE_2);
+    }
 }
