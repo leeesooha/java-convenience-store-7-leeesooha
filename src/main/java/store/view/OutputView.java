@@ -27,11 +27,18 @@ public class OutputView {
         System.out.printf("총구매액\t\t%,d\t%,d\n", receiptDto.getTotalQuantity(), receiptDto.getTotalPrice());
         System.out.printf("행사할인\t\t\t-%,d\n", receiptDto.getTotalPromotionPrice());
         if (discountRate != 0) {
-            receiptDto.setApplyMembershipDiscount((int) (discountRate * receiptDto.getNotApplyPromotionPrice()));
+            calculateMembership(receiptDto, discountRate);
         }
         System.out.printf("멤버십할인\t\t\t-%,d\n", receiptDto.getApplyMembershipDiscount());
         System.out.printf("내실돈\t\t\t %,d\n\n", receiptDto.getTotalPrice() -
                 receiptDto.getApplyMembershipDiscount() - receiptDto.getTotalPromotionPrice());
+    }
+
+    private void calculateMembership(ReceiptDto receiptDto, double discountRate) {
+        receiptDto.setApplyMembershipDiscount((int) (discountRate * receiptDto.getNotApplyPromotionPrice()));
+        if (receiptDto.getApplyMembershipDiscount() > 8000) {
+            receiptDto.setApplyMembershipDiscount(8000);
+        }
     }
 
     private void displayBonusRecord(ShoppingCart shoppingCart) {
