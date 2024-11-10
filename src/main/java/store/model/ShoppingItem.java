@@ -34,4 +34,8 @@ public class ShoppingItem {
     public int getPromotionQuantity() {
         return promotionQuantity;
     }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
