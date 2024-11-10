@@ -1,8 +1,7 @@
 package store.validator;
 
 import java.util.List;
-import javax.swing.event.HyperlinkEvent;
-import store.enums.Error;
+import store.Constant.Error;
 
 public class Validator {
     public static void checkPurchaseFormat(List<String> productData) {

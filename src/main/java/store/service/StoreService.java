@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import store.dataBase.ProductDB;
 import store.dataBase.PromotionDB;
-import store.enums.Error;
+import store.Constant.Error;
 import store.model.Product;
 import store.model.ShoppingItem;
 import store.model.StockInventory;

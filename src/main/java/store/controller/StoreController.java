@@ -1,8 +1,8 @@
 package store.controller;
 
 import java.util.List;
-import store.enums.Discount;
-import store.enums.Message;
+import store.Constant.Discount;
+import store.Constant.Message;
 import store.model.ProductBox;
 import store.model.ShoppingItem;
 import store.model.StockInventory;

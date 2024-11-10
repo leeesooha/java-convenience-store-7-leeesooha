@@ -1,6 +1,6 @@
 package store.view;
 
-import static store.enums.Message.*;
+import static store.Constant.Message.*;
 
 import store.model.ShoppingCart;
 import store.model.ShoppingItem;
