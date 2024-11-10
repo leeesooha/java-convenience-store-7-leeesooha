@@ -1,4 +1,4 @@
-package store.Constant;
+package store.constant;
 
 public class Message {
     public static final String WELCOME_MESSAGE = "안녕하세요. W편의점입니다.\n"

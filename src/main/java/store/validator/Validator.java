@@ -1,7 +1,7 @@
 package store.validator;
 
 import java.util.List;
-import store.Constant.Error;
+import store.constant.Error;
 
 public class Validator {
     public static void checkPurchaseFormat(List<String> productData) {

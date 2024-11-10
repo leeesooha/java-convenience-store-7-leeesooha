@@ -1,4 +1,4 @@
-package store.Constant;
+package store.constant;
 
 public enum Error {
     ERROR_MESSAGE("[ERROR] "),
