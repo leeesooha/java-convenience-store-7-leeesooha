@@ -60,8 +60,7 @@ public class StockInventory {
         if (promotionProductBox != null) {
             promotionQuantity = promotionProductBox.getQuantity();
         }
-        int totalQuantity = normalQuantity + promotionQuantity;
-        return (totalQuantity >= count);
+        return (normalQuantity + promotionQuantity >= count);
     }
 
     public boolean isExistProductName(String productName) {

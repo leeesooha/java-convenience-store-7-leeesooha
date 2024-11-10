@@ -39,7 +39,6 @@ public class StoreService {
 
     private void adjustStockInventory(StockInventory stockInventory) {
         List<ProductBox> additionalProductBoxes = new ArrayList<>(); // 추가할 항목을 저장할 임시 리스트
-
         for (ProductBox productBox : stockInventory.getProductBoxes()) {
             ProductBox normalProductBox = stockInventory.findNormalProductBoxByProductName(
                     productBox.getProduct().getName());
@@ -49,7 +48,10 @@ public class StoreService {
                 additionalProductBoxes.add(addProductBox); // 임시 리스트에 추가
             }
         }
+        addProductBoxes(stockInventory, additionalProductBoxes);
+    }
 
+    private void addProductBoxes(StockInventory stockInventory, List<ProductBox> additionalProductBoxes) {
         // 순회가 끝난 후 stockInventory에 새로운 ProductBox들을 추가
         for (ProductBox additionalProductBox : additionalProductBoxes) {
             stockInventory.addProductBox(additionalProductBox);
