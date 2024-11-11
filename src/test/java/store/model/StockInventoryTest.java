@@ -8,6 +8,9 @@ import static store.model.PromotionTest.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class StockInventoryTest {
     public static final String PRODUCT_NAME_1 = "콜라";
@@ -76,28 +79,36 @@ public class StockInventoryTest {
         assertEquals(stockInventory.findNormalProductBoxByProductName(PRODUCT_NAME_1), normalProductBox1);
     }
 
-    @Test
-    @DisplayName("프로모션 재고와 일반재고가 상품구매수만큼 충분한지 확인하는 기능 테스트")
-    void isStockAvailable() {
-        assertTrue(stockInventory.isStockAvailable(PRODUCT_NAME_2, PRODUCT_QUANTITY));
-        assertFalse(stockInventory.isStockAvailable(PRODUCT_NAME_2, PRODUCT_QUANTITY + 1));
-
-        assertTrue(stockInventory.isStockAvailable(PRODUCT_NAME_1, PRODUCT_QUANTITY * 2));
+    @ParameterizedTest
+    @DisplayName("프로모션 재고와 일반재고가 상품구매수만큼 충분한지 확인하는 테스트")
+    @CsvSource({
+            "사이다, 5, true",
+            "사이다, 6, false",
+            "콜라, 10, true"
+    })
+    void isStockAvailable(String productName, int quantity, boolean expectedResult) {
+        assertEquals(stockInventory.isStockAvailable(productName, quantity), expectedResult);
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("상품명이 존재하는지 확인하는 테스트")
-    void isExistProductName() {
-        assertTrue(stockInventory.isExistProductName(PRODUCT_NAME_1));
-        assertTrue(stockInventory.isExistProductName(PRODUCT_NAME_2));
-        assertTrue(stockInventory.isExistProductName(PRODUCT_NAME_3));
-        assertFalse(stockInventory.isExistProductName(NONE_EXIST_PRODUCT_NAME));
+    @ValueSource(strings = {PRODUCT_NAME_1, PRODUCT_NAME_2, PRODUCT_NAME_3})
+    void isExistProductName(String productName) {
+        assertTrue(stockInventory.isExistProductName(productName));
     }
 
-    @Test
+    @ParameterizedTest
+    @DisplayName("상품명이 존재하지 않는지 확인하는 테스트")
+    @ValueSource(strings = {NONE_EXIST_PRODUCT_NAME})
+    void isNotExistProductName(String productName) {
+        assertFalse(stockInventory.isExistProductName(productName));
+    }
+
+    @ParameterizedTest
     @DisplayName("상품명으로 상품가격 확인하는 테스트")
-    void findPriceByProductName() {
-        assertEquals(stockInventory.findPriceByProductName(PRODUCT_NAME_1), PRODUCT_PRICE_1);
-        assertEquals(stockInventory.findPriceByProductName(PRODUCT_NAME_2), PRODUCT_PRICE_2);
+    @CsvSource({"콜라, 1000",
+            "사이다, 2000"})
+    void findPriceByProductName(String productName, int expectedPrice) {
+        assertEquals(stockInventory.findPriceByProductName(productName), expectedPrice);
     }
 }
