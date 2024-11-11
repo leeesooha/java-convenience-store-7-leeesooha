@@ -29,7 +29,7 @@ public class Validator {
         }
     }
 
-    public static void checkCoverBracket(String str) {
+    private static void checkCoverBracket(String str) {
         if (str.charAt(0) != '[') {
             throw new IllegalArgumentException(Error.PURCHASE_FORMAT_MESSAGE.getErrorMessage());
         }
