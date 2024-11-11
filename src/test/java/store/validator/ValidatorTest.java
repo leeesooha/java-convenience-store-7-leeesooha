@@ -39,4 +39,18 @@ public class ValidatorTest {
 
         assertDoesNotThrow(() -> Validator.checkPurchaseFormat(productData));
     }
+
+    @Test
+    @DisplayName("구매상품내역이 대괄호로 감싸지지 않으면 예외 발생하는 테스트")
+    void checkCoverBracketExpectException() {
+        List<String> productData1 = new ArrayList<>();
+        productData1.add(INVALID_FRONT_BRACKET_PURCHASE_PRODUCT);
+        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData1))
+                .isInstanceOf(IllegalArgumentException.class);
+
+        List<String> productData2 = new ArrayList<>();
+        productData2.add(INVALID_END_BRACKET_PURCHASE_PRODUCT);
+        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData2))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
