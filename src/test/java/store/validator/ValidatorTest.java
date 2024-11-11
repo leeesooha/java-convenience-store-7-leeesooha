@@ -62,4 +62,13 @@ public class ValidatorTest {
 
         assertDoesNotThrow(() -> Validator.checkPurchaseFormat(productData1));
     }
+
+    @Test
+    @DisplayName("구매상품내역이 대괄호안의 상품과 수량의 포맷이 유효하면 예외 발생 안하는 테스트")
+    void checkInnerFormat() {
+        List<String> productData1 = new ArrayList<>();
+        productData1.add(VALID_FRONT_BRACKET_PURCHASE_PRODUCT);
+
+        assertDoesNotThrow(() -> Validator.checkPurchaseFormat(productData1));
+    }
 }
