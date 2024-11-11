@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class ValidatorTest {
     private static final String FIRST_PURCHASE_PRODUCT = "[콜라-1]";
@@ -40,17 +42,13 @@ public class ValidatorTest {
         assertDoesNotThrow(() -> Validator.checkPurchaseFormat(productData));
     }
 
-    @Test
     @DisplayName("구매상품내역이 대괄호로 감싸지지 않으면 예외 발생하는 테스트")
-    void checkCoverBracketExpectException() {
-        List<String> productData1 = new ArrayList<>();
-        productData1.add(INVALID_FRONT_BRACKET_PURCHASE_PRODUCT);
-        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData1))
-                .isInstanceOf(IllegalArgumentException.class);
-
-        List<String> productData2 = new ArrayList<>();
-        productData2.add(INVALID_END_BRACKET_PURCHASE_PRODUCT);
-        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData2))
+    @ParameterizedTest
+    @ValueSource(strings = {INVALID_FRONT_BRACKET_PURCHASE_PRODUCT, INVALID_END_BRACKET_PURCHASE_PRODUCT})
+    void checkCoverBracketExpectException(String invalidBracketProduct) {
+        List<String> productData = new ArrayList<>();
+        productData.add(invalidBracketProduct);
+        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -63,22 +61,16 @@ public class ValidatorTest {
         assertDoesNotThrow(() -> Validator.checkPurchaseFormat(productData1));
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {
+            INVALID_FORMAT_PURCHASE_PRODUCT_1,
+            INVALID_FORMAT_PURCHASE_PRODUCT_2,
+            INVALID_FORMAT_PURCHASE_PRODUCT_3})
     @DisplayName("구매상품내역이 대괄호안의 상품과 수량의 포맷이 유효하지 않으면 예외 발생하는 테스트")
-    void checkInnerFormatExpectException() {
-        List<String> productData1 = new ArrayList<>();
-        productData1.add(INVALID_FORMAT_PURCHASE_PRODUCT_1);
-        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData1))
-                .isInstanceOf(IllegalArgumentException.class);
-
-        List<String> productData2 = new ArrayList<>();
-        productData2.add(INVALID_FORMAT_PURCHASE_PRODUCT_2);
-        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData2))
-                .isInstanceOf(IllegalArgumentException.class);
-
-        List<String> productData3 = new ArrayList<>();
-        productData3.add(INVALID_FORMAT_PURCHASE_PRODUCT_3);
-        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData3))
+    void checkInnerFormatExpectException(String InvalidFormatPurchaseProduct) {
+        List<String> productData = new ArrayList<>();
+        productData.add(InvalidFormatPurchaseProduct);
+        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
