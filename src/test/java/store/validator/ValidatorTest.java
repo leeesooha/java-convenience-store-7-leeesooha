@@ -64,6 +64,25 @@ public class ValidatorTest {
     }
 
     @Test
+    @DisplayName("구매상품내역이 대괄호안의 상품과 수량의 포맷이 유효하지 않으면 예외 발생하는 테스트")
+    void checkInnerFormatExpectException() {
+        List<String> productData1 = new ArrayList<>();
+        productData1.add(INVALID_FORMAT_PURCHASE_PRODUCT_1);
+        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData1))
+                .isInstanceOf(IllegalArgumentException.class);
+
+        List<String> productData2 = new ArrayList<>();
+        productData2.add(INVALID_FORMAT_PURCHASE_PRODUCT_2);
+        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData2))
+                .isInstanceOf(IllegalArgumentException.class);
+
+        List<String> productData3 = new ArrayList<>();
+        productData3.add(INVALID_FORMAT_PURCHASE_PRODUCT_3);
+        assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData3))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("구매상품내역이 대괄호안의 상품과 수량의 포맷이 유효하면 예외 발생 안하는 테스트")
     void checkInnerFormat() {
         List<String> productData1 = new ArrayList<>();
