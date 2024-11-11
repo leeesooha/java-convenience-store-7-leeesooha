@@ -29,4 +29,14 @@ public class ValidatorTest {
         assertThatThrownBy(() -> Validator.checkPurchaseFormat(productData))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("구매상품내역에 같은 상품명이 유일하면 예외 발생 안해야 하는 테스트")
+    void checkDuplicateProductName() {
+        List<String> productData = new ArrayList<>();
+        productData.add(FIRST_PURCHASE_PRODUCT);
+        productData.add(THIRD_PURCHASE_PRODUCT);
+
+        assertDoesNotThrow(() -> Validator.checkPurchaseFormat(productData));
+    }
 }
